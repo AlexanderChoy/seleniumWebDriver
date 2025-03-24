@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.assertj.core.api.SoftAssertions;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -80,12 +81,16 @@ public class DemoQA {
         String address = waitForElement(dr, wait, By.xpath("//td[text()='Address']/following-sibling::td")).getText();
         String stateCity = waitForElement(dr, wait, By.xpath("//td[text()='State and City']/following-sibling::td")).getText();
 
-        assert name.equals("Alex Choy") : "Name or second name do not match!";
-        assert email.equals("alex@gmail.com") : "Email does not match!";
-        assert gender.equals("Male") : "Gender does not match!";
-        assert phone.equals("9999999999") : "Phone number does not match!";
-        assert address.equals("Moscow, Lomonosov street 5-25") : "Address does not match!";
-        assert stateCity.equals("Uttar Pradesh Agra") : "State or City do not match!";
+        SoftAssertions softAssert = new SoftAssertions();
+
+        softAssert.assertThat(name).isEqualTo("Alex Choy");
+        softAssert.assertThat(email).isEqualTo("alex@gmail.com");
+        softAssert.assertThat(gender).isEqualTo("Male");
+        softAssert.assertThat(phone).isEqualTo("9999999999");
+        softAssert.assertThat(address).isEqualTo("Moscow, Lomonosov street 5-25");
+        softAssert.assertThat(stateCity).isEqualTo("Uttar Pradesh Agra");
+
+        softAssert.assertAll();
 
         dr.quit();
     }
